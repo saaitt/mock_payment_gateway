@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    let _host = {{ .host }};
+    let paymentId = {{ .paymentId }}
+        $(document).ready(function () {
+            $("#payment_failed").click(function () {
+                $.ajax({
+                    type: "GET",
+                    url: _host + "?status=failed&payment_id="+paymentId,
+                    contentType: 'application/json',
+                    success: function (response) {
+                        alert("success!");
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(errorThrown, textStatus)
+                        alert("error");
+                    },
+                });
+            });
+
+            $("#payment_success").click(function () {
+                $.ajax({
+                    type: "GET",
+                    url: _host + "?status=success&payment_id="+paymentId,
+                    contentType: 'application/json',
+                    success: function (response) {
+                        alert("success!");
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(errorThrown, textStatus)
+                        alert("error");
+                    },
+                });
+            });
+        });
+    $(document).ready(function () {
+
+    });
+    console.log($(location).attr('host'))
+</script>
+
+<h2>Payment</h2>
+<p>Determine payment response: </p>
+
+<h2>Payment ID: {{ .paymentId }}</h2>
+<p>payment for the amount of : {{.amount}}</p>
+<p>for address: {{.host}}</p>
+
+
+<button id="payment_success">Success</button>
+<button id="payment_failed">Fail</button>
+
+
+
+</body>
+</html>
